@@ -399,6 +399,8 @@ class EapiConnection(object):
             if not type(response_content) == str:
                 # For Python 3.x - decode bytes into string
                 response_content = response_content.decode()
+            if response.status == 401:
+                raise ConnectionError(str(self), response_content)
             decoded = json.loads(response_content)
             _LOGGER.debug('eapi_response: %s' % decoded)
 
